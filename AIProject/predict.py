@@ -1,14 +1,12 @@
 from functools import reduce
 import pandas as pd
 
-
 class Classifier():
     data = None
     class_attr = None
     priori = {}
     cp = {}
     hypothesis = None
-
 
     def __init__(self,filename=None, class_attr=None ):
         self.data = pd.read_csv(filename, sep=',', header =(0))
@@ -33,7 +31,6 @@ class Classifier():
                 #print(class_data[i]," ",data_attr[i])
                 total+=1
         return total/float(class_data.count(class_value))
-
 
     def calculate_conditional_probabilities(self, hypothesis):
         for i in self.priori:
