@@ -14,9 +14,8 @@ class Classifier():
 
     def calculate_priori(self):
         class_values = list(set(self.data[self.class_attr]))
-        #print(class_values)
         class_data =  list(self.data[self.class_attr])
-        #print(class_data)
+        
         for i in class_values:
             self.priori[i]  = class_data.count(i)/float(len(class_data))
         print ("Priori Values: ", self.priori)
@@ -39,25 +38,25 @@ class Classifier():
                 self.cp[i].update({ hypothesis[j]: self.get_cp(j, hypothesis[j], i)})
         print ("\nCalculated Conditional Probabilities: \n")
         print("Yes : ",self.cp['yes'])
-        print("\nNo : ",self.cp['no'],"\n")
-
+        print("No : ",self.cp['no'])
+    
+    def get_cp_val(self, condition):
+        return reduce(lambda x, y: x*y, self.cp[condition].values())*self.priori[condition]
     def classify(self):
         print ("Result: ")
-        if reduce(lambda x, y: x*y, self.cp['no'].values())*self.priori['no'] > reduce(lambda x, y: x*y, self.cp['yes'].values())*self.priori['yes']:
+        if get_cp_val('no') > get_cp_val('no'):
                 print("Do not go Class")
                 print("Conditional Probabilities are")
-                print("No:",reduce(lambda x, y: x*y, self.cp['no'].values())*self.priori['no'])
-                print("Yes:",reduce(lambda x, y: x*y, self.cp['yes'].values())*self.priori['yes'])
+                print("No:", get_cp_val('no'))
+                print("Yes:", get_cp_val('yes'))
         else:
                 print("You Should go Class")
                 print("Conditional Probabilities are :")
-                print("Yes:",reduce(lambda x, y: x*y, self.cp['yes'].values())*self.priori['yes'])
-                print("No:",reduce(lambda x, y: x*y, self.cp['no'].values())*self.priori['no'])
-        #for i in self.cp:
-         #   print ((self.cp[i].values())*self.priori[i])
+                print("Yes:", get_cp_val('yes'))
+                print("No:", get_cp_val('no'))
 
 def exitSystem():
-        print("Thank you")
+        print("Exiting...\nThank you")
         exit()
 
 if __name__ == "__main__":
