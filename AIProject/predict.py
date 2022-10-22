@@ -38,7 +38,7 @@ class Classifier():
                 self.cp[i].update({ hypothesis[j]: self.get_cp(j, hypothesis[j], i)})
         print ("\nCalculated Conditional Probabilities: \n")
         print("Yes : ",self.cp['yes'])
-        print("\nNo : ",self.cp['no'],"\n")
+        print("No : ",self.cp['no'])
     
     def get_cp_val(self, condition):
         return reduce(lambda x, y: x*y, self.cp[condition].values())*self.priori[condition]
